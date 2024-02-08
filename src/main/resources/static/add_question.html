@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Question</title>
+    <style>
+        /* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Apply a consistent font-family to the entire page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Style the form container */
+form {
+    display: flex;
+    flex-direction: column; /* Align form items vertically */
+    background: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    animation: slide-in 0.5s ease-in-out;
+}
+
+/* Style the heading */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+    font-size: 24px;
+    animation: fade-in 0.5s ease-in-out;
+}
+
+/* Style labels for better readability */
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    color: #333;
+    font-size: 16px;
+    animation: fade-in 0.5s ease-in-out;
+}
+
+/* Style input fields */
+input {
+    width: 100%; /* Make input fields take the full width of the form */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px; /* Add some padding for better input field spacing */
+    margin: 5px 0; /* Adjust margin for input fields */
+    animation: slide-in 0.5s ease-in-out;
+}
+
+/* Style the submit button */
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 18px;
+    width: 100%;
+    animation: fade-in 0.5s ease-in-out;
+    transition: background-color 0.3s; /* Add a smooth transition effect */
+}
+
+/* Add a hover effect to the button */
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Define keyframe animations for sliding and fading effects */
+@keyframes slide-in {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+    </style>
+</head>
+<body>
+<h1>Add a New Question</h1>
+<form action="http://localhost:8080/quiz/add" method="post">
+    <label for="statement">Question Statement:</label>
+    <input type="text" id="statement" name="statement" required>
+
+    <label for="Opt1">Option 1:</label>
+    <input type="text" id="Opt1" name="Opt1" required>
+
+    <label for="Opt2">Option 2:</label>
+    <input type="text" id="Opt2" name="Opt2" required>
+
+    <label for="Opt3">Option 3:</label>
+    <input type="text" id="Opt3" name="Opt3" required>
+
+    <label for="Opt4">Option 4:</label>
+    <input type="text" id="Opt4" name="Opt4" required>
+
+    <label for="corrOpt">Correct Option:</label>
+    <input type="text" id="corrOpt" name="corrOpt" required>
+
+    <button type="submit">Add Question</button>
+</form>
+</body>
+</html>

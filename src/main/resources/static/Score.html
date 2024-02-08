@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Score</title>
+    <style>
+        body {
+           font-family: Arial, sans-serif;
+           background-color: #f0f0f0;
+           margin: 0;
+           padding: 0;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           height: 100vh;
+           overflow: hidden;
+       }
+
+       h1 {
+           text-align: center;
+           background-color: #3498db;
+           color: white;
+           padding: 20px;
+           font-size: 36px;
+           margin: 0;
+           border-radius: 8px;
+           box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+           text-transform: uppercase;
+       }
+
+       #score-container {
+           text-align: center;
+           margin: 50px auto;
+           padding: 30px;
+           background-color: white;
+           border: 1px solid #ccc;
+           border-radius: 10px;
+           box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+           animation: winAnimation 1s ease-in-out;
+       }
+
+       #score-text {
+           font-size: 36px;
+           margin-bottom: 20px;
+           color: #3498db;
+       }
+
+       #time-taken {
+           font-size: 24px;
+           margin-top: 20px;
+           color: #555;
+       }
+
+       #restart-button {
+           display: block;
+           margin-top: 40px;
+           padding: 15px 30px;
+           background-color: #3498db;
+           color: white;
+           border: none;
+           border-radius: 5px;
+           cursor: pointer;
+           font-size: 20px;
+           text-transform: uppercase;
+           transition: background-color 0.3s;
+       }
+
+       #restart-button:hover {
+           background-color: #2980b9;
+       }
+
+       @keyframes winAnimation {
+           0% {
+               transform: scale(0.8);
+           }
+           100% {
+               transform: scale(1);
+           }
+       }
+    </style>
+</head>
+<body>
+<h1>Your Quiz Score</h1>
+
+<div id="score-container">
+    <div id="score-text">Your Score: <span id="score"></span>/<span id="total"></span></div>
+    <div id="time-taken">Time Taken: <span id="time"></span> seconds</div>
+    <button id="restart-button">Restart Quiz</button>
+</div>
+
+<script>
+    const scoreText = document.getElementById('score');
+    const totalText = document.getElementById('total');
+    const timeTaken = document.getElementById('time');
+    const restartButton = document.getElementById('restart-button');
+
+    // Extract the score, total questions, and time taken from the query parameters in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const score = urlParams.get('score');
+    const total = urlParams.get('len');
+    const time = urlParams.get('time');
+
+    // Display the user's score, total questions, and time taken
+    scoreText.textContent = score;
+    totalText.textContent = total;
+    timeTaken.textContent = time;
+
+    // Restart the quiz when the button is clicked
+    restartButton.addEventListener('click', () => {
+        window.location.href = 'index.html'; // Change 'index.html' to your quiz starting page
+    });
+</script>
+</body>
+</html>

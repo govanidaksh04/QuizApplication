@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Application</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a1a1a;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button {
+            display: block;
+            padding: 1.5rem 3rem;
+            background-color: #ff9933;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin: 2rem;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            background-color: #ffad66;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(2px) scale(0.95);
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome to the Quiz Application</h1>
+
+<!-- Button to Add a Question -->
+<a href="add_question.html">
+    <button>Add Question</button>
+</a>
+
+<!-- Button to Give Quiz -->
+<a href="quiz_questions.html">
+    <button>Give Quiz</button>
+</a>
+</body>
+</html>

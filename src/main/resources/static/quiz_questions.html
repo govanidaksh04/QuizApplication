@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Questions</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            font-size: 36px;
+            margin: 0;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+
+        #countdown {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 36px;
+            color: #333;
+        }
+
+        .question-container {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 80%;
+        }
+
+        .question-statement {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .question-options label {
+            display: block;
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        #submit-button {
+            display: block;
+            margin: 20px auto;
+            padding: 15px 30px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-transform: uppercase;
+        }
+
+        #submit-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+
+</head>
+<body>
+<h1>Quiz Questions</h1>
+
+<div id="countdown">Time Left: <span id="timer"></span></div>
+
+<form id="quiz-form" action="Score.html" method="post">
+    <div id="questions-container"></div>
+    <button type="button" id="submit-button">Submit</button>
+</form>
+
+<script>
+    const questionsContainer = document.getElementById('questions-container');
+const submitButton = document.getElementById('submit-button');
+const countdownElement = document.getElementById('timer'); // Select the timer display element
+
+let questions = [];
+let totalQuestions = 0; // Variable to store the total number of fetched questions
+let startTime = 0;
+
+// Fetch questions from the specified URL and store them in the questions array
+fetch('http://localhost:8080/quiz/allQuestions')
+    .then(response => response.json())
+    .then(data => {
+        questions = data;
+        totalQuestions = questions.length; // Store the total number of fetched questions
+
+        // Start the countdown timer
+        startCountdown(totalQuestions);
+        startTime = Date.now();
+
+        // Display the fetched questions
+        displayQuestions();
+    })
+    .catch(error => {
+        console.error('Error fetching questions:', error);
+    });
+
+submitButton.addEventListener('click', calculateScore);
+
+function startCountdown(duration) {
+    let timerValue = duration * 60; // Convert totalQuestions count to seconds
+
+    const countdown = setInterval(() => {
+        const minutes = parseInt(timerValue / 60, 10);
+        let seconds = timerValue % 60;
+
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        // Update the timer display on the webpage
+        countdownElement.textContent = `${minutes}:${seconds}`;
+
+        if (--timerValue < 0) {
+            clearInterval(countdown);
+            // Optionally trigger some action when the timer reaches 0
+        }
+    }, 1000);
+}
+
+function displayQuestions() {
+    questions.forEach((question, index) => {
+        const questionContainer = document.createElement('div');
+        questionContainer.className = 'question-container';
+
+        const questionStatement = document.createElement('div');
+        questionStatement.className = 'question-statement';
+        questionStatement.innerHTML = `<strong>Question:</strong> ${question.statement}`;
+
+        const questionOptions = document.createElement('div');
+        questionOptions.className = 'question-options';
+
+        questionOptions.innerHTML = `
+            <label><input type="radio" name="question${index + 1}" value="${question.option1}"> ${question.option1}</label>
+            <label><input type="radio" name="question${index + 1}" value="${question.option2}"> ${question.option2}</label>
+            <label><input type="radio" name="question${index + 1}" value="${question.option3}"> ${question.option3}</label>
+            <label><input type="radio" name="question${index + 1}" value="${question.option4}"> ${question.option4}</label>
+        `;
+
+        questionContainer.appendChild(questionStatement);
+        questionContainer.appendChild(questionOptions);
+
+        questionsContainer.appendChild(questionContainer);
+    });
+}
+
+function calculateScore() {
+    let score = 0;
+
+    questions.forEach((question, index) => {
+        const selectedOption = document.querySelector(`input[name="question${index + 1}"]:checked`);
+        if (selectedOption) {
+            const selectedAnswer = selectedOption.value;
+            const correctAnswer = question.correctAns;
+
+            if (selectedAnswer === correctAnswer) {
+                score++;
+            }
+        }
+    });
+
+    // Calculate time elapsed in seconds
+    const endTime = Date.now();
+    const timeElapsedInSeconds = Math.floor((endTime - startTime) / 1000);
+
+    // Redirect to Score.html with the score as a query parameter
+    window.location.href = `Score.html?score=${score}&len=${totalQuestions}&time=${timeElapsedInSeconds}`;
+}
+
+</script>
+</body>
+</html>
